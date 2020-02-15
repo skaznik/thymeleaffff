@@ -11,6 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -25,10 +28,13 @@ public class SkierowanieController {
     public SkierowanieController(SkierowanieService service) {
         this.service = service;
     }
-@GetMapping("/test")
-public List<SkierowanieDoLekarza> test()
-    {
-return skierowanieDoLekarzaDao.findAllByPacjentAndTerminOrderById("sadfasfdas",new Date());
+    @ResponseBody
+    @GetMapping("/test")
+public List<SkierowanieDoLekarza> test() throws ParseException {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+return skierowanieDoLekarzaDao
+        //.findAllByPacjentAndTerminOrderById("sadfasfdas",dateFormat.parse("2020-02-14"));
+        .test();
 }
     @GetMapping("/list") // /skierowanie/list -> list-skierowanie.html
     public String listSkierowanie(Model model) {

@@ -20,4 +20,10 @@ public interface SkierowanieDoLekarzaDao extends CrudRepository<SkierowanieDoLek
     List<SkierowanieDoLekarza> findAllByPacjentAndTerminOrderById(String pacjent, Date termin);
 
     List<SkierowanieDoLekarza> findAllByOrderById();
+
+    @Query("select test from SkierowanieDoLekarza test order by test.termin desc ")
+    List<SkierowanieDoLekarza> test();
+
+    @Query("select test from SkierowanieDoLekarza  test where test.pacjent = :pacjent")
+    List<SkierowanieDoLekarza> test2(String pacjent);
 }
