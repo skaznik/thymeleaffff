@@ -26,4 +26,7 @@ public interface SkierowanieDoLekarzaDao extends CrudRepository<SkierowanieDoLek
 
     @Query("select test from SkierowanieDoLekarza  test where test.pacjent = :pacjent")
     List<SkierowanieDoLekarza> test2(String pacjent);
+
+    @Query("select test from SkierowanieDoLekarza test where test.lekarz = :lekarz order by test.pacjent asc")
+    List<SkierowanieDoLekarza> cwiczenie(String lekarz);
 }

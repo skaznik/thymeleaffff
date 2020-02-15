@@ -34,7 +34,8 @@ public List<SkierowanieDoLekarza> test() throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 return skierowanieDoLekarzaDao
         //.findAllByPacjentAndTerminOrderById("sadfasfdas",dateFormat.parse("2020-02-14"));
-        .test();
+        //.test();
+        .cwiczenie("AZ");
 }
     @GetMapping("/list") // /skierowanie/list -> list-skierowanie.html
     public String listSkierowanie(Model model) {
