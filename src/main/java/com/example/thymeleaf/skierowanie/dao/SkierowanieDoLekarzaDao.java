@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -16,4 +17,7 @@ public interface SkierowanieDoLekarzaDao extends CrudRepository<SkierowanieDoLek
     @Override
     List<SkierowanieDoLekarza> findAllById(Iterable<Integer> integers);
 
+    List<SkierowanieDoLekarza> findAllByPacjentAndTerminOrderById(String pacjent, Date termin);
+
+    List<SkierowanieDoLekarza> findAllByOrderById();
 }

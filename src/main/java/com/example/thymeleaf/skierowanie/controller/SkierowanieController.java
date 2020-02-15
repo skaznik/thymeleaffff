@@ -1,24 +1,35 @@
 package com.example.thymeleaf.skierowanie.controller;
 
+import com.example.thymeleaf.skierowanie.dao.SkierowanieDoLekarzaDao;
 import com.example.thymeleaf.skierowanie.dto.SkierowanieDoLekarzaDTO;
+import com.example.thymeleaf.skierowanie.model.SkierowanieDoLekarza;
 import com.example.thymeleaf.skierowanie.service.SkierowanieService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/skierowanie")
 public class SkierowanieController {
 
+    @Autowired
+    SkierowanieDoLekarzaDao skierowanieDoLekarzaDao;
     SkierowanieService service;
 
     public SkierowanieController(SkierowanieService service) {
         this.service = service;
     }
-
+@GetMapping("/test")
+public List<SkierowanieDoLekarza> test()
+    {
+return skierowanieDoLekarzaDao.findAllByPacjentAndTerminOrderById("sadfasfdas",new Date());
+}
     @GetMapping("/list") // /skierowanie/list -> list-skierowanie.html
     public String listSkierowanie(Model model) {
         model.addAttribute("skierowania", service.listSkierowanie());
