@@ -1,5 +1,7 @@
 package com.example.thymeleaf.skierowanie.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -23,6 +25,10 @@ public class SkierowanieDoLekarza {
     String pacjent;
 
     Date termin;
+@Fetch(FetchMode.JOIN) //wtedy leci tylko jeden rozbudowany select
+    @ManyToOne
+    @JoinColumn
+    Miejsce miejsce;
 
     public SkierowanieDoLekarza() {
     }
@@ -32,6 +38,14 @@ public class SkierowanieDoLekarza {
         this.lekarz = lekarz;
         this.pacjent = pacjent;
         this.termin = termin;
+    }
+
+    public Miejsce getMiejsce() {
+        return miejsce;
+    }
+
+    public void setMiejsce(Miejsce miejsce) {
+        this.miejsce = miejsce;
     }
 
     public int getId() {

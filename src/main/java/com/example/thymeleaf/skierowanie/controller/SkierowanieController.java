@@ -1,7 +1,11 @@
 package com.example.thymeleaf.skierowanie.controller;
 
+import com.example.thymeleaf.skierowanie.dao.MiejsceDAO;
+import com.example.thymeleaf.skierowanie.dao.PracownikDAO;
 import com.example.thymeleaf.skierowanie.dao.SkierowanieDoLekarzaDao;
 import com.example.thymeleaf.skierowanie.dto.SkierowanieDoLekarzaDTO;
+import com.example.thymeleaf.skierowanie.model.Miejsce;
+import com.example.thymeleaf.skierowanie.model.Pracownik;
 import com.example.thymeleaf.skierowanie.model.SkierowanieDoLekarza;
 import com.example.thymeleaf.skierowanie.service.SkierowanieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +18,7 @@ import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,6 +27,11 @@ public class SkierowanieController {
 
     @Autowired
     SkierowanieDoLekarzaDao skierowanieDoLekarzaDao;
+    @Autowired
+    MiejsceDAO miejsceDAO;
+    @Autowired
+    PracownikDAO pracownikDAO;
+
     SkierowanieService service;
 
     public SkierowanieController(SkierowanieService service) {
@@ -36,6 +45,31 @@ return skierowanieDoLekarzaDao
         //.findAllByPacjentAndTerminOrderById("sadfasfdas",dateFormat.parse("2020-02-14"));
         //.test();
         .cwiczenie("AZ");
+}
+@ResponseBody
+@GetMapping("/test2")
+public Miejsce test2() throws ParseException {
+    Miejsce miejsce = new Miejsce();
+    miejsce.setAdres("Kulkowo 28");
+    miejsce.setKodPocztowy("43-100");
+    miejsce.setMiasto("Katowice");
+    miejsce = miejsceDAO.save(miejsce);
+
+    SkierowanieDoLekarza skierowanieDoLekarza = skierowanieDoLekarzaDao.findById(5).get();
+    skierowanieDoLekarza.setMiejsce(miejsce);
+    skierowanieDoLekarza = skierowanieDoLekarzaDao.save(skierowanieDoLekarza);
+   // miejsce = miejsceDAO.findById(miejsce.getId()).get();
+   // miejsce.getSkierowanieDoLekarzas().size();
+    List<Pracownik> pracowniks = new ArrayList<>();
+    for (int i = 0; i < 5; ++i) {
+        Pracownik pracownik = new Pracownik();
+        pracownik.setImie("kiba" + i);
+        pracownik = pracownikDAO.save(pracownik);
+        pracowniks.add(pracownik);
+    }
+    miejsce.setPracowniks(pracowniks);
+    miejsce = miejsceDAO.save(miejsce);
+    return miejsce;
 }
     @GetMapping("/list") // /skierowanie/list -> list-skierowanie.html
     public String listSkierowanie(Model model) {
